@@ -13,16 +13,16 @@ Download [sprite.js](./Scripts/sprite.js) and include it in your html.
 ### Change Log ###
 2012 27 04
 * Interval `cooldown` variable bug fixed
-* `App.render` function created
+* Added `.render`
 * Image texture preloader created.
 
 2012 26 04
 * Interval FPS getter bug fixed
 
 2012 21 04
-* Created `CanvasApplicationInterval` constructor
-* Created `CanvasApplicationTexture` constructor
-* Created `CanvasApplicationSprite` constructor
+* Added `CanvasApplicationInterval` constructor
+* Added `CanvasApplicationTexture` constructor
+* Added `CanvasApplicationSprite` constructor
 
 2012 20 04
 * Sprite JS begins
