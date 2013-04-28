@@ -3,19 +3,212 @@
 <html>
 <head>
 <style type="text/css">
-
+img{border:none;}
+a{font:inherit;color:inherit;text-decoration:inherit;}
+body{
+	margin:0px;
+	padding:0px;
+}
+div.explanation{
+	float:right;
+	width:245px;
+	margin-right:15px;
+	height:100%;
+	background:rgb(51,51,51);
+	position:relative;
+	font:11px 'Lucida Grande', sans-serif;
+	color:rgb(205,205,205);
+	overflow:hidden;
+}
+div.explanation footer{
+	background:rgb(51,51,51);
+	position:absolute;
+	bottom:0px;
+	right:0px;
+	width:245px;
+	border-top:10px solid rgb(255,255,255);
+}
+div.explanation footer a.r{
+	float:right;
+}
+div.explanation footer a.l{
+	float:left;
+}
+div.explanation footer a{
+	padding:10px;
+}
+div.explanation footer a:hover{
+	color:rgb(165,165,165);
+}
+div.explanation h1{
+	color:rgb(255,255,255);
+	font-style:italic;
+	font-size:18px;
+	padding:15px 10px 0px 10px;
+	margin:0px;
+}
+div.explanation h2{
+	font-weight:normal;
+	color:rgb(165,165,165);
+	font-size:10px;
+	padding:2px 10px 15px 10px;
+	margin:0px;
+	border-bottom:10px solid rgb(255,255,255);
+}
+div.explanation h3{
+	color:rgb(255,255,255);
+	font-style:italic;
+	font-weight:normal;
+	font-size:14px;
+	padding:10px 10px 0px 10px;
+	margin:0px;
+}
+div.explanation p{
+	margin:10px;
+	color:rgb(165,165,165);
+	text-align:justify;
+}
+#datguiframe{
+	margin-bottom:20px;
+	background:rgb(255,255,255);
+}
+div.canvasFrame{
+	position:fixed;
+	top:0px;
+	left:0px;
+	bottom:0px;
+	right:275px;
+	overflow:hidden;
+}
+div.canvasFrame canvas{
+	width:100%;
+	height:100%;
+}
 </style>
 <meta charset="UTF-8" NAME="Author" CONTENT="Hunter Larco" />
 <title>SCRIPT JS TEST - Interval Functions</title>
+<script type="text/javascript" src="./resources/dat.gui.min.js"></script>
+<script type="text/javascript" src="../Scripts/sprite.js"></script>
 </head>
 <body>
 
 
-
+<div class='explanation'>
+	<div id='datguiframe'></div>
+	<h1>Interval Test</h1>
+	<h2>&#8211; 2013 04 28 &#8211;</h2>
+	<h3>Summary</h3>
+	<p>The interval function serves to run the same function repeatedly until requested to stop. However, to optimize itself it uses the requestAnimationFrame function and is able to apply FPS constraints. This test verifies that the interval function is successfully able to carry out all of these functions as well as its standard application.</p>
+	<p>In this test the interval function is used to simply draw one of two images and report the FPS, if desired by the user, it will also use it's limiting FPS cooldown. Simply turn on cooldown in the control panel.</p>
+	<footer><a href='./hover.html' class='l'>&larr; Hover Test</a><a href='./spriteRender.html' class='r'>Sprite Renderer &rarr;</a></footer>
+</div>
+<div class='canvasFrame'>
+	<canvas id='test'></canvas>
+</div>
 
 
 <script type="text/javascript">
-
+var Options = function() {
+  this['Max FPS'] = 30;
+  this.cooldown = false;
+	this.stopped = false;
+	this.renderer = 1;
+};
+window.onload = init;
+function createDatGui(interval){
+	var globals = new Options();
+	var gui = new dat.GUI({
+		autoPlace:false
+	});
+	var intervalOptions = gui.addFolder('Interval');
+	intervalOptions.add(globals,'Max FPS',0,1000).step(10).onChange(function(value){
+		interval.MAX_FPS = value;
+	});;
+	intervalOptions.add(globals,'cooldown').onChange(function(value){
+		interval.COOLDOWN = value;
+	});
+	intervalOptions.add(globals,'stopped').onChange(function(value){
+		if(value){
+			interval.stop();
+		}else{
+			interval.start();
+		};
+	});
+	var rendererOptions = gui.addFolder('Renderer');
+	rendererOptions.add(globals,'renderer',{'Empty Renderer':0,'Spirograph':1});
+	document.getElementById('datguiframe').appendChild(gui.domElement);
+	return globals;
+};
+function init(){
+	// draw function
+	var fpsHistory = [];
+	function draw(event){
+		function updateHistory(){
+			if(fpsHistory.length>=100){
+				fpsHistory.pop();
+			};
+			fpsHistory.unshift(event.FPS);
+		};
+		function renderFPS(){
+			ctx.save();
+			ctx.translate(15,canvas.height-54);
+			ctx.fillStyle = 'rgb(51,51,51)';
+			ctx.fillRect(0,0,100,40);
+			ctx.fillRect(115,0,100,40);
+			ctx.fillStyle = 'rgb(160,160,160)';
+			for(var i=0,FPS;FPS=fpsHistory[i++];){
+				var MPF = 1000/FPS/100;
+				ctx.fillRect(i-1,40,1,-40*FPS/1000);
+				ctx.fillRect(i+114,40,1,-40*MPF);
+			};
+			ctx.fillStyle = 'rgb(255,255,255)';
+			ctx.font = "9px arial";
+			ctx.textBaseline = 'top';
+			ctx.fillText('FPS - '+fpsHistory[0].toFixed(3),3,2);
+			ctx.fillText('MPF - '+(1000/fpsHistory[0]).toFixed(3),118,2);
+			ctx.restore();
+		};
+		function drawSpiroraph(){
+			function polarEquation(theta){
+				return 200*Math.cos(64*theta+new Date().getMilliseconds()/1000*Math.PI*2)+200*Math.sin(theta);
+			};
+			ctx.save();
+			ctx.translate(canvas.width/2,canvas.height/2-175);
+			ctx.strokeStyle = 'rgba(0,0,0,0.75)';
+			ctx.beginPath();
+			var y = polarEquation(0);
+			ctx.moveTo(
+				y*Math.cos(theta),
+				y*Math.sin(theta)
+			);
+			for(var theta=0.001;theta<Math.PI*2;theta+=0.001){
+				var y = polarEquation(theta);
+				ctx.lineTo(
+					y*Math.cos(theta),
+					y*Math.sin(theta)
+				);
+			};
+			ctx.stroke();
+			ctx.restore();
+		};
+		function emptyRender(){};
+		ctx.clear();
+		[emptyRender,drawSpiroraph][globals.renderer]()
+		updateHistory();
+		renderFPS();
+	};
+	// Dat GUI setup
+	var canvas = document.getElementById('test'),
+			app = canvas.getContext('2d-application'),
+			ctx = app.context,
+			interval = app.setInterval(draw,{
+				autoStart:false,
+				cooldown:false,
+				MAX_FPS:30
+			}),
+			globals = createDatGui(interval);
+	interval.start();
+};
 </script>
 </body>
 </html>

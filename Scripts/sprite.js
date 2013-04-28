@@ -2,8 +2,9 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 	var sprites = [],
 			allTextures = [];
 	/* ----- Prototypes (Constructors) ----- */
-	var CanvasApplicationInterval = function(interval){
-		var self = this;
+	var CanvasApplicationInterval = function(interval,params){
+		var self = this,
+				undefined;
 		var MPFtimecard = Date.now();// milliseconds per frame
 				forceQuit = false,
 				cooldown = true,
@@ -53,6 +54,25 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 				requestAnimationFrameWithCooldown();
 			};
 		};
+		function autoStart(){
+			if(!!params){// check autostart
+				if(!!params.autoStart&&params.autoStart===true){
+					Cycle();
+				};
+			}else{
+				Cycle();
+			};
+		};
+		function interpretParams(){
+			if(!!params){
+				if(params.cooldown!=undefined&&params.cooldown.constructor===Boolean){
+					cooldown = params.cooldown;
+				};
+				if(!!params.MAX_FPS&&params.MAX_FPS.constructor===Number){
+					minMPF = FPS_to_MPF(params.MAX_FPS);
+				};
+			};
+		};
 		function createInterval(){
 			interval = interval.bind(self);
 			self.__defineGetter__('MAX_FPS',function(){return MPF_to_FPS(previousMPF);});
@@ -72,14 +92,15 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 			self.stop = function(){
 				forceQuit = true;
 			};
-			self.restart = Cycle;
+			self.start = Cycle;
 			self.__defineGetter__('FPS',function(){
 				return threeSigFigs(MPF_to_FPS(previousMPF));
 			});
 			self.__defineGetter__('CYCLE',function(){
 				return cycleCount;
 			});
-			Cycle();
+			interpretParams();
+			autoStart();
 		};
 		if(!!interval&&(typeof(interval)).toLowerCase()=='function'){
 			createInterval();
@@ -245,6 +266,7 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 	if(!(arguments.callee.caller===HTMLCanvasElement.prototype.getContext)){// must be created by the "HTMLCanvasElement.prototype.getContext" command
 		throw new TypeError("Illegal invocation");
 	};
+	prototypeCTX();// adds functions to the context
 	this.context = ctx;
 	this.texture = CanvasApplicationTexture;
 	this.sprite = CanvasApplicationSprite;
@@ -258,8 +280,8 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 			sprite.render();
 		};
 	};
-	this.setInterval = function(interval){
-		return new CanvasApplicationInterval(interval)
+	this.setInterval = function(interval,params){
+		return new CanvasApplicationInterval(interval,params);
 	};
 	this.preloadTextures = function(progressEvent,callback){
 		function CanvasApplicationPreloadProgressEvent(){
@@ -286,6 +308,11 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 					texture.onload = loadEvent;
 				};
 			};
+		};
+	};
+	function prototypeCTX(){
+		ctx.clear = function CanvasClearShim(){
+			ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
 		};
 	};
 };

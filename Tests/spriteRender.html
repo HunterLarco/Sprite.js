@@ -1,0 +1,139 @@
+<!--This Code Is Property Of Hunter Larco And Is An Illegal Copy When Void Of This Notice-->
+<!DOCTYPE>
+<html>
+<head>
+<style type="text/css">
+img{border:none;}
+a{font:inherit;color:inherit;text-decoration:inherit;}
+body{
+	margin:0px;
+	padding:0px;
+}
+div.explanation{
+	float:right;
+	width:245px;
+	margin-right:15px;
+	height:100%;
+	background:rgb(51,51,51);
+	position:relative;
+	font:11px 'Lucida Grande', sans-serif;
+	color:rgb(205,205,205);
+	overflow:hidden;
+}
+div.explanation footer{
+	background:rgb(51,51,51);
+	position:absolute;
+	bottom:0px;
+	right:0px;
+	width:245px;
+	border-top:10px solid rgb(255,255,255);
+}
+div.explanation footer a.r{
+	float:right;
+}
+div.explanation footer a.l{
+	float:left;
+}
+div.explanation footer a{
+	padding:10px;
+}
+div.explanation footer a:hover{
+	color:rgb(165,165,165);
+}
+div.explanation h1{
+	color:rgb(255,255,255);
+	font-style:italic;
+	font-size:18px;
+	padding:15px 10px 0px 10px;
+	margin:0px;
+}
+div.explanation h2{
+	font-weight:normal;
+	color:rgb(165,165,165);
+	font-size:10px;
+	padding:2px 10px 15px 10px;
+	margin:0px;
+	border-bottom:10px solid rgb(255,255,255);
+}
+div.explanation h3{
+	color:rgb(255,255,255);
+	font-style:italic;
+	font-weight:normal;
+	font-size:14px;
+	padding:10px 10px 0px 10px;
+	margin:0px;
+}
+div.explanation p{
+	margin:10px;
+	color:rgb(165,165,165);
+	text-align:justify;
+}
+#datguiframe{
+	margin-bottom:20px;
+	background:rgb(255,255,255);
+}
+div.canvasFrame{
+	position:fixed;
+	top:0px;
+	left:0px;
+	bottom:0px;
+	right:275px;
+	overflow:hidden;
+}
+div.canvasFrame canvas{
+	width:100%;
+	height:100%;
+}
+</style>
+<meta charset="UTF-8" NAME="Author" CONTENT="Hunter Larco" />
+<title>SCRIPT JS TEST - Sprite Rendering Tests</title>
+<script type="text/javascript" src="./resources/dat.gui.min.js"></script>
+<script type="text/javascript" src="../Scripts/sprite.js"></script>
+</head>
+<body>
+
+
+<div class='explanation'>
+	<div id='datguiframe'></div>
+	<h1>Sprite Rendering Tests</h1>
+	<h2>&#8211; 2013 04 28 &#8211;</h2>
+	<h3>Summary</h3>
+	<p></p>
+	<footer><a href='./interval.html' class='l'>&larr; Interval Test</a><a href='./texturePreload.html' class='r'>Texture Preloader &rarr;</a></footer>
+</div>
+<div class='canvasFrame'>
+	<canvas id='test'></canvas>
+</div>
+
+
+<script type="text/javascript">
+var Options = function() {
+  
+};
+window.onload = init;
+function createDatGui(interval){
+	var globals = new Options();
+	var gui = new dat.GUI({
+		autoPlace:false
+	});
+	
+	document.getElementById('datguiframe').appendChild(gui.domElement);
+	return globals;
+};
+function init(){
+	// draw function
+	
+	// Dat GUI setup
+	var canvas = document.getElementById('test'),
+			app = canvas.getContext('2d-application'),
+			ctx = app.context,
+			interval = app.setInterval(draw,{
+				autoStart:false,
+				cooldown:false
+			}),
+			globals = createDatGui(interval);
+	interval.start();
+};
+</script>
+</body>
+</html>
