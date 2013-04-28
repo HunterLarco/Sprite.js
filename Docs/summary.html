@@ -84,7 +84,8 @@ content{
 	position:absolute;
 	left:270px;
 	top:0px;
-	margin:45px 0px 0px 65px;
+	margin:0px;
+	padding:45px 0px 45px 65px;
 	width:800px;
 }
 content h1{
@@ -126,7 +127,7 @@ content div.hline{
 }
 </style>
 <meta charset="UTF-8" NAME="Author" CONTENT="Hunter Larco" />
-<title>SCRIPT JS TEST - Sprite Rendering Tests</title>
+<title>Sprite JS</title>
 <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autoload=true"></script>
 <link href="./resources/prettify.css" type="text/css" rel="stylesheet"/>
 </head>
@@ -142,14 +143,14 @@ content div.hline{
 	<a href='https://github.com/HunterLarco/Sprite-JS'>
 		<div class='button'>Fork on Git Hub</div>
 	</a>
-	<a href='#'>
+	<a href='./introduction.html'>
 		<div class='button'>View Docs</div>
 	</a>
 	<a href='#'>
 		<div class='button'>View Tests</div>
 	</a>
 	<div class='buffer'></div>
-	<h2>This project is<br/>owned by<br/><a class='link' href='https://github.com/HunterLarco'>Hunter Larco</a></h2>
+	<h2>This project is<br/>maintained by<br/><a class='link' href='https://github.com/HunterLarco'>Hunter Larco</a></h2>
 	<h2>Website based on the GitHub Dinky Theme</h2>
 </header>
 <content id='md'>
@@ -163,6 +164,13 @@ content div.hline{
 	<pre class='prettyprint'>&lt;script src='js/sprite.js'&gt;&lt;/script&gt;</pre>
 	<h2>Change Log</h2>
 	<div class='hline'></div>
+	<p>2012 28 04</p>
+	<ul>
+		<li>clear shim added to 2d-application context</li>
+		<li>cooldown and MAX_FPS params added to CanvasApplicationInterval</li>
+		<li>Added <a href='../Tests/interval.html'>Interval Test</a></li>
+		<li>Began documenting Sprite JS</li>
+	</ul>
 	<p>2012 27 04</p>
 	<ul>
 		<li>Interval cooldown variable bug fixed</li>

@@ -11,6 +11,12 @@ Download [sprite.js](./Scripts/sprite.js) and include it in your html.
 ```
 
 ### Change Log ###
+2012 28 04
+* `clear` shim added to `2d-application` context
+* `cooldown` and `MAX_FPS` params added to `CanvasApplicationInterval`
+* Added [Interval Test](./Tests/interval.html)
+* Began documenting Sprite JS
+
 2012 27 04
 * Interval `cooldown` variable bug fixed
 * Added `.render`

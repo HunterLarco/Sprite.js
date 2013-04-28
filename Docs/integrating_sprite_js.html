@@ -1,0 +1,208 @@
+<!--This Code Is Property Of Hunter Larco And Is An Illegal Copy When Void Of This Notice-->
+<!DOCTYPE>
+<html>
+<head>
+<style type="text/css">
+img{border:none;}
+a{font:inherit;color:inherit;text-decoration:inherit;}
+body{
+	margin:0px;
+	padding:0px;
+	background:rgb(251,250,247);
+	-webkit-font-smoothing:antialiased;
+	font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size:14px;
+	line-height:20px;
+	color:rgb(23,23,23);
+}
+header{
+	float:left;
+	width:190px;
+	background:rgb(23,23,23);
+	margin:45px 0px 0px 0px;
+	-webkit-border-top-right-radius:4px;
+	-webkit-border-bottom-right-radius:4px;
+	-moz-border-radius-topright:4px;
+	-moz-border-radius-bottomright:4px;
+	border-top-right-radius:4px;
+	border-bottom-right-radius:4px;
+	color:rgb(255,255,255);
+	padding:25px 40px;
+}
+header h1{
+	font-size:30px;
+	font-weight:300;
+	margin:0px;
+	padding:15px 0px 20px 0px;
+	font-family:Arvo, sans-serif;
+}
+header h2{
+	font-size:16px;
+	font-weight:400;
+	margin:0px;
+	padding:0px 0px 20px 0px;
+	line-height:22px;
+}
+header a.link{
+	text-decoration:underline;
+	font-weight:300;
+}
+header a.link:hover{
+	color:rgb(205,205,205);
+}
+header ul{
+	font-size:15px;
+	margin:0px;
+	list-style:none;
+	padding:20px 40px;
+	margin:0px 0px 20px 0px;
+	width:190px;
+	position:relative;
+	left:-40px;
+/*	background:rgb(251,250,247);*/
+/*	color:rgb(23,23,23);*/
+}
+header ul li span.arrow{
+	margin-left:-12px;
+	font-size:13px;
+	vertical-align:top;
+	width:12px;
+	overflow:hidden;
+	display:inline-block;
+	text-align:center;
+	transition:all 400ms ease-in-out;
+	-moz-transition:all 400ms ease-in-out;
+	-webkit-transition:all 400ms ease-in-out;
+	-o-transition:all 400ms ease-in-out;
+	position:relative;
+	left:-4px;
+}
+header ul li span{
+	cursor:pointer;
+}
+header ul li{
+	padding:3px 0px;
+}
+header ul li span.title{
+	padding:3px 0px;
+}
+header ul li.sl{
+	color:rgb(214,4,25);
+}
+header ul li.slm span.arrow{
+	transform:rotate(90deg);
+	-ms-transform:rotate(90deg);
+	-webkit-transform:rotate(90deg);
+}
+header ul li.slm ul.submenu{
+	display:block;
+}
+header ul li ul.submenu{
+	display:none;
+	margin:0px;
+	padding:0px;
+	left:0px;
+	width:100%;
+}
+header ul li ul.submenu li{
+	margin-left:15px;
+}
+content{
+	position:absolute;
+	left:270px;
+	top:0px;
+	margin:0px;
+	padding:45px 0px 45px 65px;
+	width:800px;
+}
+content h1{
+	padding:10px 0px;
+	margin:0px;
+	font-size:30px;
+	font-weight:300;
+}
+content div.line{
+	width:100%;
+	height:1px;
+	background:rgb(180,180,180);
+}
+content h2{
+	padding:25px 0px 0px 0px;
+	margin:0px;
+	font-size:18px;
+	font-weight:400;
+	color:rgb(0,0,0);
+}
+content p{
+	padding:10px 0px 0px 0px;
+	margin:0px;
+	color:rgb(51,51,51);
+}
+content a{
+	font-style:italic;
+	color:rgb(214,4,25);
+}
+content ul{
+	margin:8px 0px;
+	color:rgb(51,51,51);
+}
+content div.hline{
+	width:100%;
+	height:1px;
+	margin-top:4px;
+	background:rgb(221,220,217);
+}
+content p.date{
+	padding-top:100px;
+	color:rgb(91,91,91);
+	font-style:italic;
+	font-size:12px;
+}
+</style>
+<meta charset="UTF-8" NAME="Author" CONTENT="Hunter Larco" />
+<title>Sprite JS | Docs | Integration</title>
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autoload=true"></script>
+<link href="./resources/prettify.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+
+
+<header>
+	<a href='./summary.html'><h1>Sprite JS</h1></a>
+	<h2>Javascript Canvas Extension API</h2>
+	<ul>
+		<li><span class='title'>Download</span></li>
+		<li class='slm'>
+			<span class='arrow'>▸</span><span class='title'>Getting Started</span>
+			<ul class='submenu'>
+				<a href='./introduction.html'><li><span class='title'>Introduction</span></li></a>
+				<li class='sl'><span class='title'>Integrating Sprite JS</span></li>
+				<a href='./creating_a_texture.html'><li><span class='title'>Creating A Texture</span></li></a>
+				<li><span class='title'>Creating A Scene</span></li>
+				<li><span class='title'>Using Sprites With Textures</span></li>
+				<li><span class='title'>Using Intervals</span></li>
+			</ul>
+		</li>
+		<li>
+			<span class='arrow'>▸</span><span class='title'>Extended Reading</span>
+		</li>
+	</ul>
+	<h2>This project is<br/>maintained by<br/><a class='link' href='https://github.com/HunterLarco'>Hunter Larco</a></h2>
+</header>
+<content>
+	<h1>Integrating Sprite JS</h1>
+	<div class='line'></div>
+	<p>The Sprite JS Library consists of one file: <a href='../Scripts/sprite.js'>sprite.js</a>. Though you may wish to use it's minified version <a href='../Scripts/sprite.min.js'>here</a>. Either way, download one of the copies and include it in your website's source files.</p>
+	<p>Once downloaded, embed the Sprite JS Library into your html. For example...</p>
+	<pre class='prettyprint'>&lt;script src='js/sprite.js'&gt;&lt;/script&gt;</pre>
+	<h2>Next</h2>
+	<div class='hline'></div>
+	<p>Congradulations! You have successfully installed Sprite JS, now let's have fun!</p>
+	<p>Continue to <a href='./creating_a_texture.html'>Creating A Texture</a>.</p>
+	<p class='date'>Last updated April 28, 2013.</p>
+</content>
+
+
+<script type="text/javascript"></script>
+</body>
+</html>
