@@ -16,6 +16,8 @@ Download [sprite.js](./Scripts/sprite.js) and include it in your html.
 * `cooldown` and `MAX_FPS` params added to `CanvasApplicationInterval`
 * Added [Interval Test](./Tests/interval.html)
 * Began documenting Sprite JS
+* `CanvasApplicationTexture` now supports data URI images
+* Automatic check update functionality added
 
 2012 27 04
 * Interval `cooldown` variable bug fixed

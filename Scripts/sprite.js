@@ -1,4 +1,11 @@
 var CanvasApplicationRenderingContext2D = function(ctx){
+	var self = this;
+	if(!(self instanceof CanvasApplicationRenderingContext2D)){// forces "new" prefix
+		throw new TypeError("DOM object constructor cannot be called as a function.");
+	};
+	if(!(arguments.callee.caller===HTMLCanvasElement.prototype.getContext)){// must be created by the "HTMLCanvasElement.prototype.getContext" command
+		throw new TypeError("Illegal invocation");
+	};
 	var sprites = [],
 			allTextures = [];
 	/* ----- Prototypes (Constructors) ----- */
@@ -138,15 +145,28 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 				textureOnLoad = new Function();
 		switch((typeof(texture)).toLowerCase()){
 			case 'function':
-				allTextures.push(self);
 				createFromFunction();
 			break;
 			case 'string':
-				allTextures.push(self);
-				loadImageForTexture();
+				if(!verifyDataURI()){// if data uri
+					loadImageForTexture();
+				};
 			break;
 			default:
 				createInvalidTexture();
+		};
+		function verifyDataURI(){
+			var match = texture.match(/^data:(\w+\/\w+)(?!;charset=([^;]+))?;(\w+\d+),(.*)$/);
+			if(!!match){
+				var mimetype = match[1],
+						encoding = match[2],
+						base = match[3],
+						data = match[4];
+				createFromURIImage();
+				return true;
+			}else{
+				return false;
+			};
 		};
 		function loadImageForTexture(){
 			ajax.sample(texture,function(event){
@@ -166,12 +186,14 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 			});
 		};
 		function createFromFunction(){
+			allTextures.push(self);
 			self.TEXTURE = 1;
 			self.TYPE = 0;
 			self.RENDERER = texture;
 			self.STATE = 1;
 		};
 		function createFromImage(){
+			allTextures.push(self);
 			var img = new Image();
 			img.src = texture;
 			img.onload = runImageRendererStack;
@@ -192,6 +214,17 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 				}else{
 					ctx.drawImage(img,0,0);
 				};
+			};
+		};
+		function createFromURIImage(){
+			allTextures.push(self);
+			var img = new Image();
+			img.src = texture;
+			self.TEXTURE = 1;
+			self.TYPE = 2;
+			self.STATE = 1;
+			self.RENDERER = function(){
+				ctx.drawImage(img,0,0);
 			};
 		};
 		function runImageRendererStack(){
@@ -253,19 +286,12 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 		sprites.push(self);
 	};
 	/* ----- CanvasApplicationRenderingContext2D Constructor Code ----- */
-	var self = this,
-			canvas = ctx.canvas;
+	var canvas = ctx.canvas;
 	window.onresize = function(){
 		canvas.width = canvas.offsetWidth;
 		canvas.height = canvas.offsetHeight;
 	};
 	window.onresize();
-	if(!(self instanceof CanvasApplicationRenderingContext2D)){// forces "new" prefix
-		throw new TypeError("DOM object constructor cannot be called as a function.");
-	};
-	if(!(arguments.callee.caller===HTMLCanvasElement.prototype.getContext)){// must be created by the "HTMLCanvasElement.prototype.getContext" command
-		throw new TypeError("Illegal invocation");
-	};
 	prototypeCTX();// adds functions to the context
 	this.context = ctx;
 	this.texture = CanvasApplicationTexture;
@@ -315,6 +341,34 @@ var CanvasApplicationRenderingContext2D = function(ctx){
 			ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
 		};
 	};
+};
+/* ----- Apply General Data (Version, Author, Etc) to CanvasApplicationRenderingContext2D ----- */
+CanvasApplicationRenderingContext2D.VERSION = '0.1.0';
+CanvasApplicationRenderingContext2D.DEVELOPER = 'Hunter John Larco';
+CanvasApplicationRenderingContext2D.LAST_UPDATE = 'April 28, 2013';
+CanvasApplicationRenderingContext2D.MINIFIED = false;
+CanvasApplicationRenderingContext2D.DOCS = 'http://docs.simplrjs.appspot.com';
+CanvasApplicationRenderingContext2D.TESTS = 'http://tests.simplrjs.appspot.com';
+CanvasApplicationRenderingContext2D.WEBSITE = 'http://simplrjs.appspot.com';
+CanvasApplicationRenderingContext2D.UPDATE_MIRROR = 'http://update.simplr.appspot.com';
+/* ----- Check for Simplr Updates ----- */
+CanvasApplicationRenderingContext2D.checkUpdates = function CheckCanvasApplicationUpdates(){
+	var ajax = {
+		get:(function(url,callback){
+			var xmlhttp;
+			if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest();}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");};
+			xmlhttp.onreadystatechange=function(event){
+				if (xmlhttp.readyState==4 && xmlhttp.status==200){
+					try{callback(event);}catch(e){console.warn(e);};}};
+			xmlhttp.open("GET",url,true);
+			xmlhttp.send();
+		}).bind(this)
+	};
+	function verifyUpdate(event){
+		var response = event;
+		console.log(response);
+	};
+	ajax.get(CanvasApplicationRenderingContext2D.UPDATE_MIRROR,verifyUpdate);
 };
 /* ----- Creates New Options In "HTMLCanvasElement.prototype.getContext" ----- */
 var CanvasRenderingContext2DConstructor = HTMLCanvasElement.prototype.getContext;
